@@ -1,5 +1,4 @@
 # TRAFFIC-LIGHT-CONTROLLER-USING-VERILOG-HDL
-# Traffic Light Controller – Verilog HDL
 
 A clock-driven **Finite State Machine (FSM)-based Traffic Light Controller** designed in Verilog HDL to control traffic signals across multiple roads and directions.
 
