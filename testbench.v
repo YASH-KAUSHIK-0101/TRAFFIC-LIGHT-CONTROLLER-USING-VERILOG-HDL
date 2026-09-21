@@ -1,49 +1,27 @@
 `timescale 1ns/1ps
-
-module traffic_light_controller_tb;
-
-reg clk;
-reg reset;
-wire [2:0] NS;
-wire [2:0] EW;
-
-// Instantiate DUT
-traffic_light_controller uut (
-    .clk(clk),
-    .reset(reset),
-    .NS(NS),
-    .EW(EW)
-);
-
-// Generate 10 ns clock
-initial begin
-    clk = 0;
-    forever #5 clk = ~clk;
+module Traffic_Light_Controller_TB;
+reg clk,rst;
+wire [2:0]light_M1;
+wire [2:0]light_S;
+wire [2:0]light_MT;
+wire [2:0]light_M2;
+Traffic_Light_Controller dut(.clk(clk) , .rst(rst) , .light_M1(light_M1) , .light_S(light_S)  ,.light_M2(light_M2),.light_MT(light_MT)   );
+initial
+begin
+    clk=1'b0;
+    forever #(1000000000/2) clk=~clk;
 end
-
-// Create VCD waveform file
-initial begin
-    $dumpfile("dump.vcd");
-    $dumpvars(0, traffic_light_controller_tb);
-end
-
-// Apply stimulus
-initial begin
-    reset = 1;
-    #20;
-
-    reset = 0;
-
-    // Run long enough to see all states
-    #350;
-
+//    initial
+//    $stop;//to add ps
+initial
+begin
+    rst=0;
+    #1000000000;
+    rst=1;
+    #1000000000;
+    rst=0;
+    #(1000000000*200);
     $finish;
-end
-
-// Print state changes
-initial begin
-    $monitor("Time=%0t Reset=%b NS=%b EW=%b",
-             $time, reset, NS, EW);
-end
+    end
 
 endmodule
